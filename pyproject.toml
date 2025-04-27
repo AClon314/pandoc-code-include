@@ -1,29 +1,30 @@
 [build-system]
-requires = ["hatchling"]
 build-backend = "hatchling.build"
+requires = ["hatchling"]
 
 [project]
-name = "py-pandoc-include-code"
-version = "0.0.2"
 authors = [
-  { name="Alberto Veneri", email="alberto.veneri@unive.it" },
+  {name = "Alberto Veneri", email = "alberto.veneri@unive.it"},
+  {name = "AClon314", email = "aclon-e@qq.com"},
 ]
-description = "A very simple filter to replace the unmaintained pandoc-include-code"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+description = "A very simple filter to replace the unmaintained pandoc-code-include"
+name = "pandoc-code-include"
 readme = "README.md"
 requires-python = ">=3.11"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
+version = "0.0.3"
 
 dependencies = [
-    "panflute>=2.3.0"
+  "panflute>=2.3.0",
 ]
 
 [project.scripts]
-    py-pandoc-include-code = "py_pandoc_include_code:main"
+pandoc-code-include = "pandoc_code_include:main"
 
 [project.urls]
-"Homepage" = "https://github.com/veneres/py-pandoc-include-code"
-"Bug Tracker" = "https://github.com/veneres/py-pandoc-include-code/issues"
+"Bug Tracker" = "https://github.com/AClon314/py-pandoc-include-code/issues"
+"Homepage" = "https://github.com/AClon314/py-pandoc-include-code"

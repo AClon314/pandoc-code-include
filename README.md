@@ -1,9 +1,9 @@
-# Py pandoc include code
+# pandoc code include
 Python filter for pandoc to replace the original `pandoc-include-code` that is no longer supported (https://github.com/owickstrom/pandoc-include-code).
 `py-pandoc-include-code` is a valid python package, thus you can install it simply with:
 
 ```bash
-pip install git+https://github.com/veneres/py-pandoc-include-code.git
+pip install git+https://github.com/AClon314/py-pandoc-include-code.git
 ```
 At the moment, the provides only two ways of including code:
 
