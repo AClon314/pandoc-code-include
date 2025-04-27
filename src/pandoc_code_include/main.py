@@ -1,8 +1,7 @@
 #!/bin/env python
 import re
-import sys
 import panflute as pan
-PATTERN = r'(?<=snippet {id}\n)([\s\S]*)(?=snippet {id}$)'
+PATTERN = r'snippet {id}\n((?:(?!snippet {id})[\s\S])*)'
 
 
 def action(elem: pan.Element, doc: pan.Doc):
@@ -18,7 +17,7 @@ def action(elem: pan.Element, doc: pan.Doc):
     kw = {
         'identifier': elem.identifier,
         'classes': elem.classes,
-        'attributes': elem.attributes
+        'attributes': elem.attributes,
     }
     if snippet is not None:
         codes: list[str] = []
@@ -27,14 +26,19 @@ def action(elem: pan.Element, doc: pan.Doc):
         pan.debug(doc.format, pattern)
         for m in matches:
             lines = m.group(1).splitlines()[:-1]
+            if not lines or not lines[0]:
+                continue
             start = text[:m.start()].count('\n') + 1
             pan.debug(m, lines)
             if is_num:
                 pan.debug(start)
-                blocks = []
                 codes.append(
                     pan.OrderedList(
-                        *[pan.ListItem(pan.CodeBlock(l, **kw)) for l in lines], start=start)
+                        *[pan.ListItem(
+                            pan.CodeBlock(
+                                l, **kw
+                            )
+                        ) for i, l in enumerate(lines)], start=start)
                 )
             else:
                 codes.append('\n'.join(lines))
