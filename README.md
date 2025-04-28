@@ -1,69 +1,73 @@
 # pandoc code include
-Python filter for pandoc to replace the original `pandoc-include-code` that is no longer supported (https://github.com/owickstrom/pandoc-include-code).
-`py-pandoc-include-code` is a valid python package, thus you can install it simply with:
 
-```bash
+## Install
+```sh
 pip install git+https://github.com/AClon314/py-pandoc-include-code.git
 ```
-At the moment, the provides only two ways of including code:
+> [!NOTE]
+> use the **same python/pip environment** when you call `pandoc`.
 
-- Whole file
-- Snippet
-
-The examples belows assume to have a file called `main.c` in the same directory of your markdown source:
-
-```
-// start snippet solution
-#include <stdio.h>
-#include <stdbool.h>
-
-int foo() {
-    printf("My snippet\n");
-}
-// end snippet solution
-
-
-int main(int argc, char *argv[]) {
-
-}
+Enable with `--filter` or `--defaults=config.yaml`:
+```sh
+pandoc --filter pandoc-code-include -o out.pdf input.md
 ```
 
-## Whole file inclusion
+Use `DEBUG=1` as env to print extra messages:
+```sh
+DEBUG=1 pandoc --filter pandoc-code-include ...
+```
 
-To include an entire file into your markdown, you can use:
+## Usage
+### include whole file
+~~~markdown
+```{.c include=main.c}
+~~~
 
-    ```{.c include=main.c}
-
-    ```
-
-## Snippet inclusion
-
-To include only part of your code between delimited by a tag such as `solution`, you need to use two special comments, 
-following the template below.
+### snippet
+Support all languages, start and end with `... snippet <tag>`.
 
 ```c
-// start snippet solution
-    
-    <my snippet of code>
-   
-// end snippet solution
+// snippet tag1
+printf("c");
+// snippet tag1
 ```
-*Note*: the filter will match exactly the pattern `// start snippet <my-tag>` and `// end snippet <my-tag>`, 
-including the white spaces.
-
-Going back to the previous example, you can include the snippet `solution` in your markdown with: 
-
-    ```{.c include=main.c snippet=solution}
-
-    ```
-
-## Include py-pandoc-include-code in your pandoc pipeline
-After the installation, you can add `py-pandoc-include-code` simply by using the `--filter` option e.g.:
-
-```bash
-pandoc  --filter py-pandoc-include-code  -o out.pdf my_source_md.md
-
+```python
+# snippet tag2
+print("python")
+# snippet tag2
 ```
 
-*Note*: `py-pandoc-include-code` will be installed through `pip` in your current python environment, thus recall to use 
-the same environment also when you call `pandoc`.
+In markdown:
+~~~markdown
+```{.c include=main.c snippet=tag1}
+```
+
+```{.py include=main.py snippet=tag2}
+```
+~~~
+
+> [!WARNING]
+> I use **regex**, so there could be some edge cases. Please report if you find any.
+
+### numberLines
+~~~markdown
+```{.py .numberLines}
+~~~
+---
+If you like start from 1:
+~~~markdown
+```{.py .numberLines start=1}
+~~~
+
+#### adjust docx numbered style
+in WPS:
+
+1. **Click** on the ordered number
+2. Modify the `Numbered Code` style. *Suggest <code>Style <u>b</u>ased on</code>: `Source Code`*
+3. Open `Numbering...` dialog.
+4. **Delete all** existing `Custom List` styles.
+5. Reopen `Numbering...` dialog.
+6. `Customize` as you want!
+
+![wps](doc/wps.webp)
+![wps](doc/wps_style.webp)
