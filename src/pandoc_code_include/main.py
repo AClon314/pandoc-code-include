@@ -22,7 +22,10 @@ def action(elem: pan.Element, doc: pan.Doc):
     kw = {
         'identifier': elem.identifier,
         'classes': elem.classes,
-        'attributes': {**elem.attributes, 'custom-style': 'Numbered Code'},
+        'attributes': {
+            # **elem.attributes,
+            # 'custom-style': 'Numbered Code'
+        },
     }
     with open(path, "r") as f:
         elem.text = text = f.read()

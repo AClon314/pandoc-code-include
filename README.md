@@ -2,7 +2,7 @@
 
 ## Install
 ```sh
-pip install git+https://github.com/AClon314/py-pandoc-include-code.git
+pip install git+https://github.com/AClon314/pandoc-code-include.git
 ```
 > [!NOTE]
 > use the **same python/pip environment** when you call `pandoc`.
@@ -60,7 +60,13 @@ If you like start from 1:
 ~~~
 
 #### adjust docx numbered style
-in WPS:
+
+### MS Word
+1. Adjust style: `Numbered`
+2. Or Like this:
+![ms word](doc/ms_word.webp)
+
+### WPS
 
 1. **Click** on the ordered number
 2. Modify the `Numbered Code` style. *Suggest <code>Style <u>b</u>ased on</code>: `Source Code`*
@@ -71,3 +77,4 @@ in WPS:
 
 ![wps](doc/wps.webp)
 ![wps](doc/wps_style.webp)
+
