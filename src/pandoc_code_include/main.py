@@ -4,8 +4,12 @@ import os
 import panflute as pan
 PATTERN = r'snippet {id}\n((?:(?!snippet {id})[\s\S])*)'
 DEBUG = os.environ.get("DEBUG", None)
-if not DEBUG:
-    pan.debug = lambda *args: None  # DEBUG
+if DEBUG:
+    def Log(*args, **kwargs):
+        """Same as print, but prints to stderr (which is not intercepted by Pandoc)."""
+        pan.debug(*args, **kwargs)
+else:
+    Log = lambda *args, **kwargs: None
 
 
 def action(elem: pan.Element, doc: pan.Doc):
@@ -56,17 +60,17 @@ def action(elem: pan.Element, doc: pan.Doc):
                 min_dedent = float('inf')
                 indents = re.findall(r'^[ \t]*', '\n'.join(lines))
                 for idt in indents:
-                    pan.debug('min_dedent', min_dedent, '\n'.join(lines))
+                    Log('min_dedent', min_dedent, '\n'.join(lines))
                     min_dedent = min(min_dedent, len(idt))
                 lines = [l[min_dedent:] for l in lines]
-                pan.debug('min_dedent', min_dedent)
-            pan.debug(_m, lines)
+                Log('min_dedent', min_dedent)
+            Log(_m, lines)
             if is_num:
                 if Range:
                     start = a + 1
                 else:
                     start = text[:_m.start()].count('\n') + 1
-                pan.debug(start)
+                Log(start)
                 _kw = {'start': start} if not offset else {'start': offset}
                 codes.append(
                     pan.OrderedList(

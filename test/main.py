@@ -1,6 +1,6 @@
 import unittest
 from panflute import run_filter
-from py_pandoc_include_code import action
+from pandoc_code_include.main import action
 import io
 
 
@@ -20,6 +20,7 @@ class TestSum(unittest.TestCase):
             oracle = "".join(f.readlines())
 
         self.assertEqual(res_lines, oracle)
+
 
 if __name__ == '__main__':
     unittest.main()
